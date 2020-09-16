@@ -92,9 +92,7 @@ const movies = {
   },
 };
 
-class App extends Component {
-  render() {
-    return (
+const App = (props) => (
       <div>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -104,7 +102,5 @@ class App extends Component {
         <MovieCardsList profiles={profiles} movies={movies} users={users} />
       </div>
     );
-  }
-}
 
 export default App;
