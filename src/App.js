@@ -1,30 +1,23 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import AddItem from './AddItem';
+import ListItems from './ListItems';
+import DeleteLastItem from './DeleteLastItem';
 
 class App extends React.Component {
   state = {
-    value: '',
     items: [],
   };
 
-  handleChange = event => {
-    this.setState({ value: event.target.value });
-  };
-
-  addItem = event => {
-    event.preventDefault();
+  addItem = text => {
     this.setState(oldState => ({
-      items: [...oldState.items, this.state.value],
+      items: [...oldState.items, text],
     }));
   };
 
   deleteLastItem = event => {
     this.setState(prevState => ({ items: this.state.items.slice(0, -1) }));
-  };
-
-  inputIsEmpty = () => {
-    return this.state.value === '';
   };
 
   noItemsFound = () => {
@@ -39,24 +32,12 @@ class App extends React.Component {
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
         <h2>Shopping List</h2>
-        <form onSubmit={this.addItem}>
-          <input
-            type="text"
-            placeholder="Enter New Item"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-          <button disabled={this.inputIsEmpty()}>Add</button>
-        </form>
+        <AddItem onAddItem={this.addItem}/>
 
-        <button onClick={this.deleteLastItem} disabled={this.noItemsFound()}>
-          Delete Last Item
-        </button>
+        <DeleteLastItem onDeleteLastItem={this.deleteLastItem} isDisabled={this.noItemsFound}/>
 
         <p className="items">Items</p>
-        <ol className="item-list">
-          {this.state.items.map((item, index) => <li key={index}>{item}</li>)}
-        </ol>
+        <ListItems items={this.state.items} />
       </div>
     );
   }
